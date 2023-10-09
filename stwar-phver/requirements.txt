@@ -1,6 +1,7 @@
 # google
 functions-framework==3.*
 google-cloud
+google-cloud-secret-manager
 
 # utils
 gspread
