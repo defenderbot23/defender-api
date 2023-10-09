@@ -6,7 +6,7 @@ on:
 
 env:
   PROJECT_ID: start-ax
-  SERVICE: start-ax-gsheet-insert
+  SERVICE: stwar-phver
   REGION: us-central1
 
 jobs:
