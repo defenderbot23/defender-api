@@ -6,7 +6,7 @@ on:
 
 env:
   PROJECT_ID: start-ax
-  SERVICE: stwar-phver
+  SERVICE: stwar-phver-v2
   REGION: us-central1
 
 jobs:
