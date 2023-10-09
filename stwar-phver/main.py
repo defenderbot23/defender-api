@@ -5,12 +5,23 @@ import gspread
 import phonenumbers
 from phonenumbers import NumberParseException
 
+from auth import init_auth
+
+# try to get secret
+try:
+    secret_value = init_auth()
+    print(f'Secret: {secret_value}')
+
+except Exception as ex:
+    print(ex)
+
 # init gsheets client
 gc = gspread.service_account(filename='/workspace/srv_acc.json')
 
 
 @functions_framework.http
 def insert_row(request):
+
     # parse request
     request_json = request.get_json(silent=True)
     request_args = request.args

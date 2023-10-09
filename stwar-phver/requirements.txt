@@ -1,3 +1,7 @@
+# google
 functions-framework==3.*
+google-cloud
+
+# utils
 gspread
 phonenumbers
