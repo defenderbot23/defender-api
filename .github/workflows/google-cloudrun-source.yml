@@ -1,0 +1,38 @@
+name: Deploy to Cloud Run from Source
+
+on:
+  push:
+    branches: [ "master" ]
+
+env:
+  PROJECT_ID: start-ax
+  SERVICE: start-ax-gsheet-insert
+  REGION: us-central1
+
+jobs:
+  deploy:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Google Auth
+        id: auth
+        uses: 'google-github-actions/auth@v0'
+        with:
+          credentials_json: '${{ secrets.SRV_ACC_JSON }}'
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v0
+        with:
+          service: ${{ env.SERVICE }}
+          region: ${{ env.REGION }}
+          source: ./stwar-phver
+
+      - name: Show Output
+        run: echo ${{ steps.deploy.outputs.url }}
