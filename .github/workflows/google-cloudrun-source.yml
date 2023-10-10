@@ -35,7 +35,9 @@ jobs:
           runtime: "python311"
           source_dir: stwar-phver
           entry_point: match_phones
+          https_trigger_security_level: secure_always
           ingress_settings: ALLOW_ALL
+          memory_mb: 128M
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
