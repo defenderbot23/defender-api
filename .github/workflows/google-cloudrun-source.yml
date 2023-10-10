@@ -34,6 +34,7 @@ jobs:
           name: ${{ env.SERVICE }}
           runtime: "python311"
           source_dir: stwar-phver
+          entry_point: match_phones
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
