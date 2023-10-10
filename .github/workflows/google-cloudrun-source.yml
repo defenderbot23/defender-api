@@ -35,6 +35,7 @@ jobs:
           runtime: "python311"
           source_dir: stwar-phver
           entry_point: match_phones
+          ingress_settings: ALLOW_ALL
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
