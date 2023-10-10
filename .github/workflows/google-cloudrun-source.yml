@@ -32,7 +32,7 @@ jobs:
         uses: 'google-github-actions/deploy-cloud-functions@v1'
         with:
           name: ${{ env.SERVICE }}
-          runtime: 'nodejs16'
+          runtime: "python311"
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
