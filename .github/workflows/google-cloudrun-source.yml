@@ -33,6 +33,7 @@ jobs:
         with:
           name: ${{ env.SERVICE }}
           runtime: "python311"
+          source_dir: stwar-phver
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
