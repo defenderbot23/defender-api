@@ -16,9 +16,11 @@ def match_phones(request):
     matching_phones = get_matching_phones(query_phone_list)
     print(f'Matching phones: {matching_phones}')
 
-    # get texts for categories
-    matched_categories = {m['category'] for m in matching_phones.values()}
-    match_texts = get_matching_texts(matched_categories)
+    # get texts
+    match_texts = {}
+    if matching_phones:
+        matched_categories = {m['category'] for m in matching_phones.values()}
+        match_texts = get_matching_texts(matched_categories)
     print(f'Matching texts: {match_texts}')
 
     # prepare response
