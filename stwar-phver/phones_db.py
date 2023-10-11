@@ -15,9 +15,11 @@ def get_matching_phones(phone_list):
     # results
     matching_phones = {}
 
+    # iterate by chunks of 30 because of FireStore query limit for operator "whereIn"
     for phone_batch in chunker(phone_list, 30):
 
         # query
+        print(f'Query for phone list: {phone_batch}')
         query = phones_col.where(filter=FieldFilter("phone_number", "in", phone_batch))
 
         # iterate results
