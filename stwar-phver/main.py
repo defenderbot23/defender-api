@@ -9,7 +9,7 @@ def match_phones(request):
 
     # parse request
     request_json = request.get_json(silent=True)
-    query_phone_list = request_json.get('phone_list')
+    query_phone_list = [int(num) for num in request_json.get('phone_list')]
     print(f'Query phones: {query_phone_list}')
 
     # get matches
