@@ -39,6 +39,8 @@ jobs:
           https_trigger_security_level: secure_always
           ingress_settings: ALLOW_ALL
           memory_mb: 128M
+          min_instances: 1
+          max_instances: 10
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
