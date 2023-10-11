@@ -3,7 +3,7 @@ from google.cloud.firestore_v1.base_query import FieldFilter
 
 db = firestore.Client()
 phones_col = db.collection("phones")
-texts_col = db.collection("text")
+texts_col = db.collection("texts")
 
 
 def chunker(seq, size):
