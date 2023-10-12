@@ -7,10 +7,10 @@ from google.cloud import secretmanager
 def get_srv_acc_cred_json():
 
     # GCP project in which secrets are stored
-    project_id = 'fair-alliance-401708'         # os.environ['GOOGLE_PROJECT_ID']
+    project_id = os.environ['GOOGLE_PROJECT_ID']
 
     # ID of the secret
-    secret_id = "SECRET_GOOGLE_SRV_ACC_JSON"    # os.environ['SECRET_GOOGLE_SRV_ACC_JSON']
+    secret_id = os.environ['SECRET_GOOGLE_SRV_ACC_JSON']
 
     # Create the Secret Manager client.
     client = secretmanager.SecretManagerServiceClient()
