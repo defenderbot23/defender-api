@@ -6,7 +6,7 @@ on:
 
 env:
   PROJECT_ID: defender-bot
-  SERVICE: defender-api-prod
+  SERVICE: validation_program
   REGION: europe-west1
 
 jobs:
