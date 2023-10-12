@@ -1,5 +1,4 @@
-name: Deploy to GCP
-
+name: Deploy Verify CF to GCP
 on:
   push:
     branches: [ "master" ]
@@ -34,7 +33,7 @@ jobs:
           name: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
           runtime: "python311"
-          source_dir: stwar-phver
+          source_dir: verify
           entry_point: match_phones
           https_trigger_security_level: secure_always
           ingress_settings: ALLOW_ALL
