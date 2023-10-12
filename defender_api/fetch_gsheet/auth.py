@@ -1,5 +1,4 @@
 import os
-import json
 
 from google.cloud import secretmanager
 

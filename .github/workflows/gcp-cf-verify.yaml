@@ -33,7 +33,7 @@ jobs:
           name: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
           runtime: "python311"
-          source_dir: verify
+          source_dir: defender_api
           entry_point: match_phones
           https_trigger_security_level: secure_always
           ingress_settings: ALLOW_ALL

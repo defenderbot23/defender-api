@@ -2,20 +2,21 @@ import os
 import json
 
 import gspread
-import functions_framework
 
-from common.utils import dump_to_tmp, get_arg, parse_number
-
-# get srv acc creds
-srv_acc_cred = os.environ['SRV_ACC_CRED_JSON']
-creds_file_path = dump_to_tmp('srv_acc_cred.json', srv_acc_cred)
-
-# init gsheets client
-gc = gspread.service_account(filename=creds_file_path)
+from defender_api.common.utils import dump_to_tmp, get_arg, parse_number
 
 
-@functions_framework.http
-def fetch(request):
+def init_gsheet_client():
+
+    # get srv acc creds
+    srv_acc_cred = os.environ['SRV_ACC_CRED_JSON']
+    creds_file_path = dump_to_tmp('srv_acc_cred.json', srv_acc_cred)
+
+    # init gsheets client
+    return gspread.service_account(filename=creds_file_path)
+
+
+def fetch_gsheet(request):
 
     # parse request
     request_json = request.get_json(silent=True)
@@ -26,8 +27,11 @@ def fetch(request):
     start_row = get_arg(request_json, 'start_row', 0)
     fields = get_arg(request_json, 'fields')
 
+    # init gsheet auth
+    gs = init_gsheet_client()
+
     # get data from sheet
-    sheet = gc.open_by_url(url)
+    sheet = gs.open_by_url(url)
     all_data = sheet.worksheet(worksheet).get_values()
 
     # init response

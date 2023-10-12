@@ -37,7 +37,7 @@ jobs:
           env_vars: GOOGLE_PROJECT_ID=fair-alliance-401708
           secret_environment_variables: SRV_ACC_CRED_JSON=projects/1001044919802/secrets/SRV_ACC_CRED_JSON/versions/1
           service_account_email: defender-api-srv-acc@fair-alliance-401708.iam.gserviceaccount.com
-          source_dir: fetch_gsheet
+          source_dir: defender_api
           entry_point: fetch_gsheet
           https_trigger_security_level: secure_always
           ingress_settings: ALLOW_ALL

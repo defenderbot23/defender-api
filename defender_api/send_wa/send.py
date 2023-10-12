@@ -5,14 +5,17 @@ import functions_framework
 
 from whatsapp_api_client_python import API
 
-from common.utils import get_arg
+from defender_api.common.utils import get_arg
 
-# init green api
-green_api = API.GreenApi(os.environ['GREEN_API_INSTANCE_ID'], os.environ['GREEN_API_INSTANCE_TOKEN'])
+
+def init_client():
+
+    # init green api
+    return API.GreenApi(os.environ['GREEN_API_INSTANCE_ID'], os.environ['GREEN_API_INSTANCE_TOKEN'])
 
 
 @functions_framework.http
-def send(request):
+def send_wa(request):
 
     # parse request
     request_json = request.get_json(silent=True)
@@ -22,6 +25,7 @@ def send(request):
     message = get_arg(request_json, 'message')
 
     # send message
+    green_api = init_client()
     resp = green_api.sending.sendMessage(
         chatId=chat_id,
         message=message
