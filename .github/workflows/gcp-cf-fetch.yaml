@@ -34,6 +34,7 @@ jobs:
           name: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
           runtime: "python311"
+          env_vars_file: ./env/gcp-cf-fetch.env.yaml
           source_dir: fetch
           entry_point: fetch
           https_trigger_security_level: secure_always
