@@ -20,56 +20,47 @@ def fetch(request):
 
     # parse request
     request_json = request.get_json(silent=True)
-    request_args = request.args
 
     # get args
-    sheet_url = get_arg(request_json, request_args, 'sheet_url',
-                        'https://docs.google.com/spreadsheets/d/1sMhcaZ0fFLmoFlTDsS-uhtaemLEpFDB3PUXI5Z6BFgc')
+    url = get_arg(request_json, 'url')
+    worksheet = get_arg(request_json, 'worksheet')
+    start_row = get_arg(request_json, 'start_row', 0)
+    fields = get_arg(request_json, 'fields')
 
     # get data from sheet
-    sh = gc.open_by_url(sheet_url)
-    all_data = sh.worksheet('Numbers').get_values()
-    # text_data = sh.worksheet('Text').get_values()
+    sheet = gc.open_by_url(url)
+    all_data = sheet.worksheet(worksheet).get_values()
 
-    response = all_data
+    # init response
+    resp = []
 
-    # prepare numbers
-    # num_list = []
-    # for i in range(1, len(all_data)):
-    #
-    #     # parse and validate phone number
-    #     parsed_number = parse_number(all_data[i][0])
-    #     if parsed_number:
-    #         num_list.append(
-    #             {
-    #                 'phone_num': parsed_number,
-    #                 'name': all_data[i][1],
-    #                 'category': all_data[i][2]
-    #             }
-    #         )
-    #
-    # # prepare texts
-    # text_dict = {}
-    # for i in range(1, len(text_data)):
-    #     if text_data[i][0]:
-    #         text_dict[text_data[i][0]] = text_data[i][1]
+    # iterate rows
+    for row_index in range(start_row, len(all_data)):
 
-    # response = {
-    #     'numbers': num_list,
-    #     # 'text_map': text_dict,
-    # }
+        # init row resp
+        row_resp = {}
 
-    print(f'Response: {response}')
-    return json.dumps(response), 200, {'ContentType': 'application/json'}
+        # parse fields
+        for f in fields:
+
+            # get data
+            row_resp[f['name']] = all_data[row_index][f['column']]
+
+            # format
+            if f.get('format') == 'phone':
+                row_resp[f['name']] = parse_number(row_resp[f['name']])
+
+        # append to response
+        resp.append(row_resp)
+
+    # return
+    return json.dumps(resp), 200, {'ContentType': 'application/json'}
 
 
-def get_arg(request_json, request_args, arg_name, default_value):
+def get_arg(request_json, arg_name, default_value=None):
 
     if request_json and arg_name in request_json:
         arg_value = request_json[arg_name]
-
-    elif request_args and arg_name in request_args:
-        arg_value = request_args[arg_name]
 
     elif default_value:
         arg_value = default_value
