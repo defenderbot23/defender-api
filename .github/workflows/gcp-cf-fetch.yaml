@@ -33,9 +33,10 @@ jobs:
         with:
           name: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
+          runtime: "python311"
           env_vars: GOOGLE_PROJECT_ID=fair-alliance-401708
           secret_environment_variables: SRV_ACC_CRED_JSON=projects/1001044919802/secrets/SRV_ACC_CRED_JSON/versions/1
-          runtime: "python311"
+          service_account_email: defender-api-srv-acc@fair-alliance-401708.iam.gserviceaccount.com
           source_dir: fetch
           entry_point: fetch
           https_trigger_security_level: secure_always
