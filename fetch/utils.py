@@ -1,12 +1,12 @@
 import tempfile
 
 
-def dump_to_file(filename, content):
+def dump_to_tmp(filename, content):
 
-    # dump to file
-    temp_dir = tempfile.TemporaryDirectory()
-    file_path = f'{temp_dir.name}/{filename}'
+    # prepare path
+    file_path = f'/tmp/{filename}'
 
+    # write to file
     with open(file_path, 'w') as f:
         f.write(content)
 

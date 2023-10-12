@@ -5,12 +5,12 @@ import functions_framework
 import gspread
 import phonenumbers
 
-from utils import dump_to_file
+from utils import dump_to_tmp
 
 # get srv acc creds
 srv_acc_cred = os.environ['SRV_ACC_CRED_JSON']
 print(json.dumps({"severity": "DEBUG", "message": f"CRED JSON: {srv_acc_cred}"}))
-creds_file_path = dump_to_file('srv_acc_cred.json', srv_acc_cred)
+creds_file_path = dump_to_tmp('srv_acc_cred.json', srv_acc_cred)
 print(json.dumps({"severity": "DEBUG", "message": f"Dump file: {creds_file_path}"}))
 
 # init gsheets client
