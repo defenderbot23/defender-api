@@ -2,7 +2,7 @@ name: Deploy Fetch CF to GCP
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "gsheet" ]
 
 env:
   PROJECT_ID: defender-bot
