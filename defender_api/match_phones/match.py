@@ -2,7 +2,7 @@ import json
 import functions_framework
 from google.cloud import firestore
 
-from phones_db import get_matching_phones, get_matching_texts
+from match_phones.phones_db import get_matching_phones, get_matching_texts
 
 
 @functions_framework.http
