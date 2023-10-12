@@ -5,7 +5,7 @@ on:
 
 env:
   PROJECT_ID: defender-bot
-  SERVICE: defender-api-verify_phones
+  SERVICE: defender-api-send_wa
   REGION: europe-west1
 
 jobs:
@@ -33,7 +33,8 @@ jobs:
           name: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
           runtime: "python311"
-          source_dir: verify
+          secret_environment_variables: GREEN_API_INSTANCE_ID=projects/1001044919802/secrets/GREEN_API_INSTANCE_ID, GREEN_API_INSTANCE_TOKEN=projects/1001044919802/secrets/GREEN_API_INSTANCE_TOKEN
+          source_dir: send_wa
           entry_point: match_phones
           https_trigger_security_level: secure_always
           ingress_settings: ALLOW_ALL

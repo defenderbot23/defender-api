@@ -1,11 +1,10 @@
 import os
 import json
 
-import functions_framework
 import gspread
-import phonenumbers
+import functions_framework
 
-from utils import dump_to_tmp
+from common.utils import dump_to_tmp, get_arg, parse_number
 
 # get srv acc creds
 srv_acc_cred = os.environ['SRV_ACC_CRED_JSON']
@@ -55,34 +54,3 @@ def fetch(request):
 
     # return
     return json.dumps(resp), 200, {'ContentType': 'application/json'}
-
-
-def get_arg(request_json, arg_name, default_value=None):
-
-    if request_json and arg_name in request_json:
-        arg_value = request_json[arg_name]
-
-    elif default_value:
-        arg_value = default_value
-
-    else:
-        raise Exception(f'Argument missing: {arg_name}')
-
-    return arg_value
-
-
-def parse_number(num_str):
-    parsed_number = None
-    try:
-
-        # try to parse
-        parsed_number = phonenumbers.parse(num_str)
-
-    except phonenumbers.NumberParseException as num_ex:
-
-        # assume default "IL" region
-        if num_ex.error_type == num_ex.INVALID_COUNTRY_CODE:
-            parsed_number = phonenumbers.parse(num_str, "IL")
-
-    if parsed_number:
-        return phonenumbers.format_number(parsed_number, phonenumbers.PhoneNumberFormat.E164)[1:]

@@ -3,7 +3,7 @@ import tempfile
 
 def dump_to_tmp(filename, content):
 
-    # prepare path
+    # prepare name
     file_path = f'/tmp/{filename}'
 
     # write to file

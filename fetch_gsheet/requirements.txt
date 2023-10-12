@@ -3,7 +3,6 @@ functions-framework==3.*
 
 # google cloud
 google-cloud
-google-cloud-firestore
 google-cloud-secret-manager
 
 # packages
