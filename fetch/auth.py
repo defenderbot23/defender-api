@@ -8,9 +8,11 @@ def get_srv_acc_cred_json():
 
     # GCP project in which secrets are stored
     project_id = os.environ['GOOGLE_PROJECT_ID']
+    print(f'ProjectId: {project_id}')
 
     # ID of the secret
     secret_id = os.environ['SECRET_GOOGLE_SRV_ACC_JSON']
+    print(f'SecretId: {secret_id}')
 
     # Create the Secret Manager client.
     client = secretmanager.SecretManagerServiceClient()
@@ -23,6 +25,7 @@ def get_srv_acc_cred_json():
 
     # Print the secret payload.
     payload = response.payload.data.decode("UTF-8")
+    print(f'Secret Payload: {payload}')
 
     return payload
 
