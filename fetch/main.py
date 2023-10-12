@@ -1,27 +1,18 @@
 import os
 import json
-import functions_framework
 
+import functions_framework
 import gspread
 import phonenumbers
-from phonenumbers import NumberParseException
 
-# from auth import dump_creds_to_file
-
-# constants
-SRV_ACC_CRED_JSON_PATH = '/workspace/srv_acc.json'
+from utils import dump_to_file
 
 # get srv acc creds
-srv_acc_cred_str = os.environ['SRV_ACC_CRED_JSON']
-print(srv_acc_cred_str)
-srv_acc_cred = json.loads(srv_acc_cred_str)
-
-# dump to file
-with open(SRV_ACC_CRED_JSON_PATH, "w") as outfile:
-    outfile.write(SRV_ACC_CRED_JSON_PATH)
+srv_acc_cred = os.environ['SRV_ACC_CRED_JSON']
+creds_file_path = dump_to_file('srv_acc_cred.json', srv_acc_cred)
 
 # init gsheets client
-gc = gspread.service_account(filename=SRV_ACC_CRED_JSON_PATH)
+gc = gspread.service_account(filename=creds_file_path)
 
 
 @functions_framework.http
@@ -94,7 +85,7 @@ def parse_number(num_str):
         # try to parse
         parsed_number = phonenumbers.parse(num_str)
 
-    except NumberParseException as num_ex:
+    except phonenumbers.NumberParseException as num_ex:
 
         # assume default "IL" region
         if num_ex.error_type == num_ex.INVALID_COUNTRY_CODE:
