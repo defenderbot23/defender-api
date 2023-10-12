@@ -1,3 +1,4 @@
+import os
 import json
 import functions_framework
 
@@ -5,13 +6,19 @@ import gspread
 import phonenumbers
 from phonenumbers import NumberParseException
 
-from auth import dump_creds_to_file
+# from auth import dump_creds_to_file
 
 # constants
 SRV_ACC_CRED_JSON_PATH = '/workspace/srv_acc.json'
 
 # get srv acc creds
-dump_creds_to_file(SRV_ACC_CRED_JSON_PATH)
+srv_acc_cred_str = os.environ['SRV_ACC_CRED_JSON']
+print(srv_acc_cred_str)
+srv_acc_cred = json.loads(srv_acc_cred_str)
+
+# dump to file
+with open(SRV_ACC_CRED_JSON_PATH, "w") as outfile:
+    outfile.write(SRV_ACC_CRED_JSON_PATH)
 
 # init gsheets client
 gc = gspread.service_account(filename=SRV_ACC_CRED_JSON_PATH)

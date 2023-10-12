@@ -33,7 +33,8 @@ jobs:
         with:
           name: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
-          env_vars: GOOGLE_PROJECT_ID=fair-alliance-401708,SECRET_GOOGLE_SRV_ACC_JSON=SRV_ACC_CRED_JSON
+          env_vars: GOOGLE_PROJECT_ID=fair-alliance-401708
+          secret_environment_variables: SRV_ACC_CRED_JSON=projects/1001044919802/secrets/SRV_ACC_CRED_JSON/versions/1
           runtime: "python311"
           source_dir: fetch
           entry_point: fetch

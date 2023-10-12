@@ -18,7 +18,7 @@ def get_srv_acc_cred_json():
     client = secretmanager.SecretManagerServiceClient()
 
     # Build the resource name of the secret version
-    secret_name = client.secret_version_path(project_id, secret_id, "1")
+    secret_name = client.secret_version_path(project_id, secret_id, 1)
 
     # Access the secret version
     response = client.access_secret_version(request={"name": secret_name})
@@ -30,7 +30,7 @@ def get_srv_acc_cred_json():
     return payload
 
 
-def dump_creds_to_file(filename):
+def dump_creds_to_file(json, filename):
 
     try:
 
