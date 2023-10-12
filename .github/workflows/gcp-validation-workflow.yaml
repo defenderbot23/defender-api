@@ -2,7 +2,7 @@ name: Deploy to GCP - Validation Program
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "validation_program" ]
 
 env:
   PROJECT_ID: defender-bot
