@@ -3,7 +3,7 @@ import json
 
 import gspread
 
-from defender_api.common.utils import dump_to_tmp, get_arg, parse_number
+from common.utils import dump_to_tmp, get_arg, parse_number
 
 
 def init_gsheet_client():

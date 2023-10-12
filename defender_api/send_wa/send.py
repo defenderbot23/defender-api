@@ -5,7 +5,7 @@ import functions_framework
 
 from whatsapp_api_client_python import API
 
-from defender_api.common.utils import get_arg
+from common.utils import get_arg
 
 
 def init_client():

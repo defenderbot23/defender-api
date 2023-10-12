@@ -1,4 +1,4 @@
-name: Deploy Verify CF to GCP
+name: Deploy SendWA CF to GCP
 on:
   push:
     branches: [ "gsheet" ]

@@ -1,4 +1,4 @@
-name: Deploy Fetch CF to GCP
+name: Deploy FetchGSheet CF to GCP
 
 on:
   push:
