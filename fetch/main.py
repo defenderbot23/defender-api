@@ -9,9 +9,7 @@ from utils import dump_to_tmp
 
 # get srv acc creds
 srv_acc_cred = os.environ['SRV_ACC_CRED_JSON']
-print(json.dumps({"severity": "DEBUG", "message": f"CRED JSON: {srv_acc_cred}"}))
 creds_file_path = dump_to_tmp('srv_acc_cred.json', srv_acc_cred)
-print(json.dumps({"severity": "DEBUG", "message": f"Dump file: {creds_file_path}"}))
 
 # init gsheets client
 gc = gspread.service_account(filename=creds_file_path)
@@ -33,20 +31,22 @@ def fetch(request):
     all_data = sh.worksheet('Numbers').get_values()
     # text_data = sh.worksheet('Text').get_values()
 
-    # prepare numbers
-    num_list = []
-    for i in range(1, len(all_data)):
+    response = all_data
 
-        # parse and validate phone number
-        parsed_number = parse_number(all_data[i][0])
-        if parsed_number:
-            num_list.append(
-                {
-                    'phone_num': parsed_number,
-                    'name': all_data[i][1],
-                    'category': all_data[i][2]
-                }
-            )
+    # prepare numbers
+    # num_list = []
+    # for i in range(1, len(all_data)):
+    #
+    #     # parse and validate phone number
+    #     parsed_number = parse_number(all_data[i][0])
+    #     if parsed_number:
+    #         num_list.append(
+    #             {
+    #                 'phone_num': parsed_number,
+    #                 'name': all_data[i][1],
+    #                 'category': all_data[i][2]
+    #             }
+    #         )
     #
     # # prepare texts
     # text_dict = {}
@@ -54,10 +54,10 @@ def fetch(request):
     #     if text_data[i][0]:
     #         text_dict[text_data[i][0]] = text_data[i][1]
 
-    response = {
-        'numbers': num_list,
-        # 'text_map': text_dict,
-    }
+    # response = {
+    #     'numbers': num_list,
+    #     # 'text_map': text_dict,
+    # }
 
     print(f'Response: {response}')
     return json.dumps(response), 200, {'ContentType': 'application/json'}
