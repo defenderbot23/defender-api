@@ -34,6 +34,7 @@ jobs:
           region: ${{ env.REGION }}
           runtime: "python311"
           secret_environment_variables: GREEN_API_INSTANCE_ID=projects/1001044919802/secrets/GREEN_API_INSTANCE_ID, GREEN_API_INSTANCE_TOKEN=projects/1001044919802/secrets/GREEN_API_INSTANCE_TOKEN
+          service_account_email: defender-api-srv-acc@fair-alliance-401708.iam.gserviceaccount.com
           source_dir: defender_api
           entry_point: send_wa
           https_trigger_security_level: secure_always
