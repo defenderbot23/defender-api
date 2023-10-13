@@ -1,16 +1,11 @@
-from google.cloud import firestore
 from google.cloud.firestore_v1.base_query import FieldFilter
-
-db = firestore.Client()
-phones_col = db.collection("phones")
-texts_col = db.collection("texts")
 
 
 def chunker(seq, size):
     return (seq[pos:pos + size] for pos in range(0, len(seq), size))
 
 
-def get_matching_phones(phone_list):
+def get_matching_phones(phones_col, phone_list):
 
     # results
     matching_phones = {}
@@ -34,7 +29,7 @@ def get_matching_phones(phone_list):
     return matching_phones
 
 
-def get_matching_texts(cat_list):
+def get_matching_texts(texts_col, cat_list):
 
     # results
     matching_texts = {}

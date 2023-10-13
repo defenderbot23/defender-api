@@ -1,4 +1,4 @@
-name: Deploy to GCP
+name: Deploy FetchGSheet CF to GCP
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
 
 env:
   PROJECT_ID: defender-bot
-  SERVICE: defender-api-prod
+  SERVICE: defender-api-fetch_gsheet
   REGION: europe-west1
 
 jobs:
@@ -34,8 +34,10 @@ jobs:
           name: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
           runtime: "python311"
-          source_dir: stwar-phver
-          entry_point: match_phones
+          secret_environment_variables: SRV_ACC_CRED_JSON=projects/1001044919802/secrets/SRV_ACC_CRED_JSON/versions/1
+          service_account_email: defender-api-srv-acc@fair-alliance-401708.iam.gserviceaccount.com
+          source_dir: defender_api
+          entry_point: fetch_gsheet
           https_trigger_security_level: secure_always
           ingress_settings: ALLOW_ALL
           memory_mb: 128M
@@ -44,4 +46,3 @@ jobs:
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
-
