@@ -30,6 +30,11 @@ def send_wa(request):
         chatId=chat_id,
         message=message
     )
+    response = {
+        'code': resp.code,
+        'data': resp.data,
+        'error': resp.error
+    }
 
     # return
-    return json.dumps(resp), 200, {'ContentType': 'application/json'}
+    return json.dumps(response), 200, {'ContentType': 'application/json'}
