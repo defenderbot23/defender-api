@@ -3,6 +3,7 @@ import functions_framework
 import send_wa.send as send
 import fetch_gsheet.fetch as fetch
 import match_phones.match as match
+import broadcast_wa.broadcast as broadcast
 
 
 @functions_framework.http
@@ -18,3 +19,8 @@ def send_wa(request):
 @functions_framework.http
 def fetch_gsheet(request):
     return fetch.fetch_gsheet(request)
+
+
+@functions_framework.cloud_event
+def fetch_gsheet(event):
+    return broadcast.broadcast(event)
