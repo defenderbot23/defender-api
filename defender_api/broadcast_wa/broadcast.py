@@ -36,12 +36,16 @@ def broadcast_wa(event):
         # iterate recipients
         for group_idx, group_chat_id in enumerate(groups):
 
-            # send message
-            print(f'Sending message to: {group_chat_id} - {groups[group_chat_id]}')
-            gapi.sending.sendMessage(
-                chatId=group_chat_id,
-                message=current_tm
-            )
+            try:
+                # send message
+                print(f'Sending message to: {group_chat_id} - {groups[group_chat_id]}')
+                gapi.sending.sendMessage(
+                    chatId=group_chat_id,
+                    message=current_tm
+                )
+            except Exception as ex:
+                print(f'Failed to send to group: {group_chat_id} - {groups[group_chat_id]}')
+                print(ex)
 
             # sleep only if there's more to send
             if group_idx < len(groups) - 1:
