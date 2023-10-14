@@ -41,18 +41,18 @@ def broadcast_wa(event):
         groups = get_groups(gapi)
 
         # iterate recipients
-        for group_idx, group in enumerate(groups):
+        for group_idx, group_chat_id in enumerate(groups):
 
             # send message
-            print(f'Sending message to: {group}')
+            print(f'Sending message to: {group_chat_id}')
             resp = gapi.sending.sendMessage(
-                chatId=group['id'],
+                chatId=group_chat_id,
                 message=current_tm
             )
 
             # register send
             if resp.code == 200:
-                response['groups'].append(group)
+                response['groups'].append(groups[group_chat_id])
 
             # sleep only if there's more to send
             if group_idx < len(groups) - 1:
