@@ -30,7 +30,13 @@ def get_timed_messages():
 
     resp = requests.request("POST", url, headers=headers, data=payload)
     resp.raise_for_status()
-    return resp.json()
+
+    # filter empty
+    messages = resp.json()
+    messages = [msg for msg in messages if msg['message'] and msg['time']]
+
+    # return
+    return messages
 
 
 def fix_times(timed_messages):
