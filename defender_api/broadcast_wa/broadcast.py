@@ -22,19 +22,12 @@ def get_groups(api):
 
 def broadcast_wa(event):
 
-    # collect executed actions
-    response = {
-        'message': None,
-        'groups': []
-    }
-
     # fetch current message
     current_tm = get_current_message()
     if current_tm:
 
         # add message
         print(f'Current message is {current_tm["message"]}')
-        response['message'] = current_tm['message']
 
         # get all groups in contacts
         gapi = init_wa_client()
@@ -44,19 +37,15 @@ def broadcast_wa(event):
         for group_idx, group_chat_id in enumerate(groups):
 
             # send message
-            print(f'Sending message to: {group_chat_id}')
-            resp = gapi.sending.sendMessage(
+            print(f'Sending message to: {group_chat_id} - {groups[group_chat_id]}')
+            gapi.sending.sendMessage(
                 chatId=group_chat_id,
                 message=current_tm
             )
-
-            # register send
-            if resp.code == 200:
-                response['groups'].append(groups[group_chat_id])
 
             # sleep only if there's more to send
             if group_idx < len(groups) - 1:
                 time.sleep(1)
 
     # return
-    return json.dumps(response), 200, {'ContentType': 'application/json'}
+    return json.dumps({'Success': True}), 200, {'ContentType': 'application/json'}
