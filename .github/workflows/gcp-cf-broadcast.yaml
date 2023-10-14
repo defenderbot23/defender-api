@@ -6,7 +6,7 @@ on:
 
 env:
   PROJECT_ID: defender-bot
-  SERVICE: defender-api-broadcast_wa
+  SERVICE: defender-api-broadcast
   REGION: europe-west1
 
 jobs:
