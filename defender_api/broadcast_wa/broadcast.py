@@ -45,18 +45,18 @@ def broadcast_wa(event):
 
             # send message
             print(f'Sending message to: {group}')
-            # resp = gapi.sending.sendMessage(
-            #     chatId=group['id'],
-            #     message=current_tm
-            # )
+            resp = gapi.sending.sendMessage(
+                chatId=group['id'],
+                message=current_tm
+            )
 
             # register send
-            # if resp.code == 200:
-            response['groups'].append(group)
+            if resp.code == 200:
+                response['groups'].append(group)
 
             # sleep only if there's more to send
             if group_idx < len(groups) - 1:
-                time.sleep(0.1)
+                time.sleep(1)
 
     # return
     return json.dumps(response), 200, {'ContentType': 'application/json'}
