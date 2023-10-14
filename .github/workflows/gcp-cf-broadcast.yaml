@@ -2,7 +2,7 @@ name: Deploy Broadcast CF to GCP
 
 on:
   push:
-    branches: [ "broadcast_wa" ]
+    branches: [ "broadcast" ]
 
 env:
   PROJECT_ID: defender-bot
@@ -37,9 +37,9 @@ jobs:
           secret_environment_variables: GREEN_API_INSTANCE_ID=projects/1001044919802/secrets/GREEN_API_INSTANCE_ID, GREEN_API_INSTANCE_TOKEN=projects/1001044919802/secrets/GREEN_API_INSTANCE_TOKEN
           service_account_email: defender-api-srv-acc@fair-alliance-401708.iam.gserviceaccount.com
           source_dir: defender_api
-          entry_point: broadcast_wa
+          entry_point: broadcast
           event_trigger_type: providers/cloud.pubsub/eventTypes/topic.publish
-          event_trigger_resource: projects/fair-alliance-401708/topics/defender-bot-broadcast_wa-trigger
+          event_trigger_resource: projects/fair-alliance-401708/topics/defender-bot-broadcast-trigger
           memory_mb: 128M
           min_instances: 0
           max_instances: 10
