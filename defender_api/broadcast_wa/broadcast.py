@@ -4,7 +4,7 @@ import time
 
 from whatsapp_api_client_python import API
 
-from broadcast.timed_messages import get_current_message
+from broadcast_wa.timed_messages import get_current_message
 
 
 def init_wa_client():
@@ -20,7 +20,7 @@ def get_groups(api):
     return groups
 
 
-def broadcast(request):
+def broadcast_wa(event):
 
     # collect executed actions
     response = {
@@ -45,18 +45,18 @@ def broadcast(request):
 
             # send message
             print(f'Sending message to: {group}')
-            # resp = gapi.sending.sendMessage(
-            #     chatId=group['id'],
-            #     message=current_tm
-            # )
+            resp = gapi.sending.sendMessage(
+                chatId=group['id'],
+                message=current_tm
+            )
 
             # register send
-            # if resp.code == 200:
-            response['groups'].append(group)
+            if resp.code == 200:
+                response['groups'].append(group)
 
             # sleep only if there's more to send
             if group_idx < len(groups) - 1:
-                time.sleep(0.1)
+                time.sleep(1)
 
     # return
     return json.dumps(response), 200, {'ContentType': 'application/json'}
