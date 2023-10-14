@@ -20,7 +20,7 @@ def get_groups(api):
     return groups
 
 
-def broadcast(event):
+def publish(event):
 
     # collect executed actions
     response = {
