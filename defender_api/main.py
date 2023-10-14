@@ -22,5 +22,5 @@ def fetch_gsheet(request):
 
 
 @functions_framework.cloud_event
-def broadcast(event):
-    return broadcast.publish(event)
+def broadcast_wa(event):
+    return broadcast.broadcast_wa(event)
