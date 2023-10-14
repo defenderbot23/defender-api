@@ -28,7 +28,9 @@ def get_timed_messages():
       'Content-Type': 'application/json'
     }
 
-    return requests.request("POST", url, headers=headers, data=payload)
+    resp = requests.request("POST", url, headers=headers, data=payload)
+    resp.raise_for_status()
+    return resp.json()
 
 
 def fix_times(timed_messages):
@@ -43,14 +45,14 @@ def fix_times(timed_messages):
         tm['time'] = datetime.combine(datetime.now(), parsed_time)
 
 
-def get_current_message(time_list):
+def get_current_message():
 
     # get all times messages
     timed_messages = get_timed_messages()
     fix_times(timed_messages)
 
     # find current
-    current_tm = next((t for t in reversed(time_list) if datetime.now().time() > t.time()), None)
+    current_tm = next((tm for tm in reversed(timed_messages) if datetime.now().time() > tm['time'].time()), None)
 
     # return
     return current_tm

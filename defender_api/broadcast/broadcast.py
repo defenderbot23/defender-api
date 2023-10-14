@@ -2,11 +2,8 @@ import os
 import json
 import time
 
-import functions_framework
-
 from whatsapp_api_client_python import API
 
-from common.utils import get_arg
 from broadcast.timed_messages import get_current_message
 
 
@@ -16,43 +13,50 @@ def init_wa_client():
     return API.GreenApi(os.environ['GREEN_API_INSTANCE_ID'], os.environ['GREEN_API_INSTANCE_TOKEN'])
 
 
-@functions_framework.http
+def get_groups(api):
+
+    all_contacts = api.serviceMethods.getContacts()
+    groups = {g['id']: g for g in all_contacts.data if g['type'] == 'group'}
+    return groups
+
+
 def broadcast(request):
+
+    # collect executed actions
+    response = {
+        'message': None,
+        'groups': []
+    }
 
     # fetch current message
     current_tm = get_current_message()
+    if current_tm:
 
-    # prepare response
-    response = {}
+        # add message
+        print(f'Current message is {current_tm["message"]}')
+        response['message'] = current_tm['message']
 
-    # parse request
-    request_json = request.get_json(silent=True)
+        # get all groups in contacts
+        gapi = init_wa_client()
+        groups = get_groups(gapi)
 
-    # get args
-    sheet_url = get_arg(request_json, 'sheet_url')
-    message = get_arg(request_json, 'message')
-    sleep_time = get_arg(request_json, 'sleep_time', 1)
-    recipient_list = get_arg(request_json, 'recipient_list', None)   # "{phone_number}@c.us" or "{group_id}@g.us"
+        # iterate recipients
+        for group_idx, group in enumerate(groups):
 
-    # iterate recipients
-    for recipient_num, recipient_id in enumerate(recipient_list):
+            # send message
+            print(f'Sending message to: {group}')
+            # resp = gapi.sending.sendMessage(
+            #     chatId=group['id'],
+            #     message=current_tm
+            # )
 
-        # send message
-        green_api = init_wa_client()
-        resp = green_api.sending.sendMessage(
-            chatId=recipient_id,
-            message=message
-        )
+            # register send
+            # if resp.code == 200:
+            response['groups'].append(group)
 
-        response[recipient_id] = {
-            'code': resp.code,
-            'data': resp.data,
-            'error': resp.error
-        }
-
-        # sleep only if there's more to send
-        if recipient_num < len(recipient_list) - 1:
-            time.sleep(sleep_time)
+            # sleep only if there's more to send
+            if group_idx < len(groups) - 1:
+                time.sleep(0.1)
 
     # return
     return json.dumps(response), 200, {'ContentType': 'application/json'}

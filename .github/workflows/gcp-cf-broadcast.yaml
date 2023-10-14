@@ -1,0 +1,48 @@
+name: Deploy FetchGSheet CF to GCP
+
+on:
+  push:
+    branches: [ "master" ]
+
+env:
+  PROJECT_ID: defender-bot
+  SERVICE: defender-api-broadcast
+  REGION: europe-west1
+
+jobs:
+  deploy:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: 'actions/checkout@v3'
+
+      - name: Google Auth
+        id: auth
+        uses: 'google-github-actions/auth@v1.1.1'
+        with:
+          credentials_json: '${{ secrets.DEFENDER_BOT_SRV_ACC_JSON }}'
+
+      - name: Deploy to GCP
+        id: 'deploy'
+        uses: 'google-github-actions/deploy-cloud-functions@v1'
+        with:
+          name: ${{ env.SERVICE }}
+          region: ${{ env.REGION }}
+          runtime: "python311"
+          secret_environment_variables: GREEN_API_INSTANCE_ID=projects/1001044919802/secrets/GREEN_API_INSTANCE_ID, GREEN_API_INSTANCE_TOKEN=projects/1001044919802/secrets/GREEN_API_INSTANCE_TOKEN
+          service_account_email: defender-api-srv-acc@fair-alliance-401708.iam.gserviceaccount.com
+          source_dir: defender_api
+          entry_point: broadcast
+          event_trigger_type: 'providers/cloud.pubsub/eventTypes/topic.publish'
+          event_trigger_resource: 'defender-bot-broadcast-trigger'
+          memory_mb: 128M
+          min_instances: 0
+          max_instances: 10
+
+      - name: Show Output
+        run: echo ${{ steps.deploy.outputs.url }}
