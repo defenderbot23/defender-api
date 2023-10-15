@@ -39,10 +39,15 @@ def broadcast_wa(event):
             try:
                 # send message
                 print(f'Sending message to: {group_chat_id} - {groups[group_chat_id]}')
-                gapi.sending.sendMessage(
+                resp = gapi.sending.sendMessage(
                     chatId=group_chat_id,
                     message=current_tm["message"]
                 )
+                if resp.code == 200:
+                    print(f'Send successful!')
+                else:
+                    print(f'Send failed: {resp.error}')
+
             except Exception as ex:
                 print(f'Failed to send to group: {group_chat_id} - {groups[group_chat_id]}')
                 print(ex)
