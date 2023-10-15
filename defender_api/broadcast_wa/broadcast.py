@@ -41,7 +41,8 @@ def broadcast_wa(event):
                 print(f'Sending message to: {group_chat_id} - {groups[group_chat_id]}')
                 resp = gapi.sending.sendMessage(
                     chatId=group_chat_id,
-                    message=current_tm["message"]
+                    message=current_tm["message"],
+                    linkPreview=False
                 )
                 if resp.code == 200:
                     print(f'Send successful!')

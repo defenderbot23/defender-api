@@ -36,7 +36,8 @@ def send_wa(request):
         green_api = init_client()
         resp = green_api.sending.sendMessage(
             chatId=recipient_id,
-            message=message
+            message=message,
+            linkPreview=False
         )
 
         response[recipient_id] = {
